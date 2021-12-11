@@ -14,7 +14,7 @@ async function main() {
 
 
   // We get the contract to deploy
-  const contract = await hre.ethers.getContractFactory("tokenSwap");
+  const contract = await hre.ethers.getContractFactory("TokenSwap");
   const swapper = await contract.deploy();
 
   await swapper.deployed();
