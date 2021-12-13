@@ -15,6 +15,7 @@ interface IERC20 {
         address recipient,
         uint amount
     ) external returns (bool);
+    function decimals() external view returns (uint8);
     event Transfer(address indexed from, address indexed to, uint value);
     event Approval(address indexed owner, address indexed spender, uint value);
 }
@@ -183,5 +184,21 @@ contract Intervention {
       //IERC20(WETH).approve(UNISWAP_V2_ROUTER, ethAmount);
 
       IUniswapV2Router02(UNISWAP_V2_ROUTER).swapExactETHForTokens{value: msg.value}(0, path, msg.sender, deadline);
+    }
+
+    function sellerino(address targetContract, uint amount) external {
+        IERC20 target = IERC20(targetContract); // decimals() is only part of erc20Detailed.. 
+        uint actualAmount = amount * 10 ** 18;
+
+        require(target.transferFrom(msg.sender, address(this), actualAmount), 'bro sent wrong amount');
+
+        require(target.approve(address(UNISWAP_V2_ROUTER), actualAmount), 'bro approval failed');
+
+        address[] memory path = new address[](2);
+        path[0] = targetContract;
+        path[1] = WETH;
+        uint deadline = block.timestamp + 210;
+
+        IUniswapV2Router02(UNISWAP_V2_ROUTER).swapExactTokensForETH(actualAmount, 0, path, msg.sender, deadline);
     }
 }
