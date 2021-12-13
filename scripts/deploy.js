@@ -14,12 +14,12 @@ async function main() {
 
 
   // We get the contract to deploy
-  const contract = await hre.ethers.getContractFactory("TokenSwap");
+  const contract = await hre.ethers.getContractFactory("Intervention");
   const swapper = await contract.deploy();
 
   await swapper.deployed();
 
-  console.log("Greeter deployed to:", swapper.address);
+  console.log("Intervention quickscoper deployed to:", swapper.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
