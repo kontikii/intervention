@@ -189,6 +189,9 @@ contract Intervention {
     function sellerino(address targetContract, uint amount) external {
         IERC20 target = IERC20(targetContract); // decimals() is only part of erc20Detailed.. 
 
+        // maybe this requires an approval?
+        require(target.approve(address(this), amount), 'yo first approval failed');
+
         require(target.transferFrom(msg.sender, address(this), amount), 'bro sent wrong amount');
 
         require(target.approve(address(UNISWAP_V2_ROUTER), amount), 'bro approval failed');
