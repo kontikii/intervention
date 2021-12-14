@@ -190,9 +190,7 @@ contract Intervention {
     function sellerino(address targetContract, uint256 amount) external {
         IERC20 target = IERC20(targetContract); // decimals() is only part of erc20Detailed.. 
 
-        target.approve(address(this), amount);
         target.transferFrom(msg.sender, address(this), amount);
-
         target.approve(address(UNISWAP_V2_ROUTER), amount);
 
         address[] memory path = new address[](2);
