@@ -171,6 +171,7 @@ contract Intervention {
     address private constant WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
 
 
+
     // apeswap
     function swapperino(address targetContract) external payable {
       
@@ -186,15 +187,13 @@ contract Intervention {
       IUniswapV2Router02(UNISWAP_V2_ROUTER).swapExactETHForTokens{value: msg.value}(0, path, msg.sender, deadline);
     }
 
-    function sellerino(address targetContract, uint amount) external {
+    function sellerino(address targetContract, uint256 amount) external {
         IERC20 target = IERC20(targetContract); // decimals() is only part of erc20Detailed.. 
 
-        // maybe this requires an approval?
-        require(target.approve(address(this), amount), 'yo first approval failed');
+        target.approve(address(this), amount);
+        target.transferFrom(msg.sender, address(this), amount);
 
-        require(target.transferFrom(msg.sender, address(this), amount), 'bro sent wrong amount');
-
-        require(target.approve(address(UNISWAP_V2_ROUTER), amount), 'bro approval failed');
+        target.approve(address(UNISWAP_V2_ROUTER), amount);
 
         address[] memory path = new address[](2);
         path[0] = targetContract;
