@@ -226,8 +226,6 @@ interface IJoeRouter02 is IJoeRouter01 {
     ) external;
 }
 
-// TODO on this one:
-// add console log with amounts. Make sure eth & wei aren't being mixed up
 contract Intervention {
     //Note Uniswap is now actually traderjoe
     address private constant UNISWAP_V2_ROUTER = 0x60aE616a2155Ee3d9A68541Ba4544862310933d4;
