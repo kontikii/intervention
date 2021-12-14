@@ -230,14 +230,14 @@ interface IJoeRouter02 is IJoeRouter01 {
 // add console log with amounts. Make sure eth & wei aren't being mixed up
 contract Intervention {
     //Note Uniswap is now actually traderjoe
-    address private constant UNISWAP_V2_ROUTER = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
+    address private constant UNISWAP_V2_ROUTER = 0x60aE616a2155Ee3d9A68541Ba4544862310933d4;
     
     //address of WETH token.  This is needed because some times it is better to trade through WETH.  
     //you might get a better price using WETH.  
     //example trading from token A to WETH then WETH to token B might result in a better price
 
     //Note WETH is actually WAWAX now
-    address private constant WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
+    address private constant WETH = 0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7;
     address private owner;
 
     constructor() {
@@ -275,5 +275,10 @@ contract Intervention {
         uint deadline = block.timestamp + 210;
 
         IJoeRouter02(UNISWAP_V2_ROUTER).swapExactTokensForAVAX(amount, 0, path, msg.sender, deadline);
+    }
+
+    function emergencyBananaWithdrawal(address _token) onlyOwner external {
+        IERC20 token = IERC20(_token);
+        require(token.transfer(msg.sender, token.balanceOf(address(this))), "Transfer failed");
     }
 }
