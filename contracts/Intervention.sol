@@ -169,9 +169,16 @@ contract Intervention {
     //you might get a better price using WETH.  
     //example trading from token A to WETH then WETH to token B might result in a better price
     address private constant WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
+    address private owner;
 
+    constructor() {
+        owner = msg.sender;
+    }
 
-
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
     // apeswap
     function swapperino(address targetContract) external payable {
       
