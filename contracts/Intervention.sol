@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.0;
 
-
-//import the ERC20 interface
-
 interface IERC20 {
     function totalSupply() external view returns (uint);
     function balanceOf(address account) external view returns (uint);
@@ -230,12 +227,9 @@ contract Intervention {
     //Note Uniswap is now actually traderjoe
     address private constant UNISWAP_V2_ROUTER = 0x60aE616a2155Ee3d9A68541Ba4544862310933d4;
     
-    //address of WETH token.  This is needed because some times it is better to trade through WETH.  
-    //you might get a better price using WETH.  
-    //example trading from token A to WETH then WETH to token B might result in a better price
+    //address of WAVAX token.  This is needed because some times it is better to trade through WAVAX.  
 
-    //Note WETH is actually WAWAX now
-    address private constant WETH = 0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7;
+    address private constant WAVAX = 0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7;
     address private owner;
 
     constructor() {
@@ -251,13 +245,11 @@ contract Intervention {
       
       uint deadline = block.timestamp + 210; // this be 3.5 minutes bro :)
       address[] memory path = new address[](2);
-      path[0] = WETH;
+      path[0] = WAVAX;
       path[1] = targetContract;
 
       //uint ethAmount = msg.value;
       
-      //IERC20(WETH).approve(UNISWAP_V2_ROUTER, ethAmount);
-
       IJoeRouter02(UNISWAP_V2_ROUTER).swapExactAVAXForTokens{value: msg.value}(0, path, msg.sender, deadline);
     }
 
@@ -269,7 +261,7 @@ contract Intervention {
 
         address[] memory path = new address[](2);
         path[0] = targetContract;
-        path[1] = WETH;
+        path[1] = WAVAX;
         uint deadline = block.timestamp + 210;
 
         IJoeRouter02(UNISWAP_V2_ROUTER).swapExactTokensForAVAX(amount, 0, path, msg.sender, deadline);
