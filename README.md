@@ -1,20 +1,8 @@
-# Basic Sample Hardhat Project
+## Intervention
+> that MW2 Sniper
 
-> Make sniper
+#### market buy
+accomplished with swapperino(), minimum tokens out is 0 so be careful
 
-> buy token, when token 2x sell to breakeven
-gelato?
-
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+#### market sell
+accomplished with sellerino(), no slippage regulating either, also approve the sniper contract on the erc-20 you're trying to sell before calling sellerino()
